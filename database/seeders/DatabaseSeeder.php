@@ -18,9 +18,8 @@ class DatabaseSeeder extends Seeder
     {
         User::factory()->create([
             'name' => 'Alec Thompson',
-            'email' => 'admin@softui.com',
+            'email' => 'admin@csc.net.my.com',
             'password' => Hash::make('secret'),
-            'about' => "Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality).",
         ]);
     }
 }

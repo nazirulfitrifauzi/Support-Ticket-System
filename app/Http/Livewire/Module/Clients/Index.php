@@ -2,12 +2,17 @@
 
 namespace App\Http\Livewire\Module\Clients;
 
+use App\Models\Clients;
 use Livewire\Component;
 
 class Index extends Component
 {
     public function render()
     {
-        return view('livewire.module.clients.index');
+        $data = Clients::all();
+
+        return view('livewire.module.clients.index', [
+            'data' => $data
+        ]);
     }
 }
