@@ -18,6 +18,10 @@ return new class extends Migration
             $table->uuid();
             $table->string('code');
             $table->string('name');
+            $table->string('address');
+            $table->string('phone');
+            $table->string('logo');
+            $table->boolean('active');
             $table->timestamps();
         });
     }
