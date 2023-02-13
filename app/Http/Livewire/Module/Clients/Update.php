@@ -50,17 +50,16 @@ class Update extends Component
     {
         $validatedData = $this->validate();
 
-        Clients::whereUuid($this->uuid)->update([
+        Clients::find($this->client->id)->update([
             'code' => $this->code,
             'name' => $this->name,
             'address' => $this->address,
             'phone' => $this->phone,
-            'active' => 1
         ]);
 
         if ($validatedData['logo']) {
             $path = $this->imgInterventionService->createThumbnail($this->logo, $this->client->uuid);
-            Clients::whereUuid($this->uuid)->update([ 'logo' => $path, ]);
+            Clients::whereId($this->client->id)->update([ 'logo' => $path ]);
         }
 
         return redirect()->route('clients:index');

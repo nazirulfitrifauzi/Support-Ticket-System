@@ -52,7 +52,7 @@ class Add extends Component
             'address' => $this->address,
             'phone' => $this->phone,
             'logo' => $path,
-            'active' => 1
+            'active' => True
         ]);
 
         return redirect()->route('clients:index');

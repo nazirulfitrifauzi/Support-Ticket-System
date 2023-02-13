@@ -7,14 +7,12 @@ use Livewire\Component;
 
 class Index extends Component
 {
+    public $client;
     protected $listeners = ['deleteConfirmed'];
 
-    private function queryId($id) { $query = Clients::query()->whereId($id); return $query; }
-    private function queryUuid($uuid) { $query = Clients::query()->whereUuid($uuid); return $query; }
-
     public function deleteConfirmed($id) {
-        $this->queryId($id)->update(['active' => False]);
-        $this->queryId($id)->delete();
+        Clients::find($id)->update(['active' => False]);
+        Clients::find($id)->delete();
 
         $this->dispatchBrowserEvent('swal', [
             'title' => 'Success!',
@@ -27,9 +25,10 @@ class Index extends Component
 
     public function changeStatus($uuid)
     {
-        ($this->queryUuid($uuid)->first()->active == True)
-            ? $this->queryUuid($uuid)->update(['active' => False])
-            : $this->queryUuid($uuid)->update(['active' => True]);
+        $client = Clients::whereUuid($uuid)->first();
+        ($client->active == True)
+            ? Clients::find($client->id)->update(['active' => False])
+            : Clients::find($client->id)->update(['active' => True]);
     }
 
     public function delete($uuid)
@@ -44,7 +43,7 @@ class Index extends Component
             'cancelButtonColor' => '#d33',
             'confirmButtonText' => 'Yes, delete it!',
             // data used to delete if confirmed
-            'id' => $this->queryUuid($uuid)->first()->id,
+            'id' => Clients::whereUuid($uuid)->first()->id,
             'postEvent' => 'deleteConfirmed',
         ]);
     }
