@@ -20,8 +20,7 @@ class Update extends Component
     public $client;
     private ImageInterventionServices $imgInterventionService;
 
-    public function boot(ImageInterventionServices $imgInterventionService)
-    {
+    public function boot(ImageInterventionServices $imgInterventionService) {
         $this->imgInterventionService = $imgInterventionService;
     }
 

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('logo');
             $table->boolean('active');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

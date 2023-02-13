@@ -11,6 +11,8 @@
     <!-- Nucleo Icons -->
     <link href="{{ asset('assets') }}/css/nucleo-icons.css" rel="stylesheet" />
     <link href="{{ asset('assets') }}/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- sweet alert 2 -->
+    <link href="{{ asset('assets') }}/css/sweetalert2.css" rel="stylesheet" />
 
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
@@ -30,8 +32,23 @@
     {{ $slot }}
 
     @livewireScripts
+    <script>
+        window.addEventListener('swal', function(e) {
+            if (e.detail['type'] == 'confirm') {
+                Swal.fire(e.detail).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.emit(e.detail['postEvent'], e.detail['id'])
+                    }
+                });
+            } else {
+                Swal.fire(e.detail);
+            }
+        });
+    </script>
 </body>
 
+<!-- plugin for sweetalert2  -->
+<script src="{{ asset('assets') }}/js/plugins/sweetalert2.js" async></script>
 <!-- plugin for charts  -->
 <script src="{{ asset('assets') }}/js/plugins/chartjs.min.js" async></script>
 <!-- plugin for scrollbar  -->
