@@ -24,25 +24,21 @@
                             </div>
 
                             <div class="w-full pl-6">
-                                <label class="inline-block mb-2 ml-1 font-bold text-size-xs text-slate-700 dark:text-white/80" for="Client's Code">Code</label>
+                                <label class="inline-block mb-2 ml-1 font-bold text-size-xs text-slate-700" for="Client's Code">Code @error('code') <span class="inline-block mb-2 ml-1 font-bold text-red-500 text-size-xs">({{ $message }})</span> @enderror</label>
                                 <div class="mb-4">
-                                    <input wire:model.defer="code" type="text" name="Client's Code" placeholder="Client's Code" class="focus:shadow-soft-primary-outline dark:bg-gray-950 dark:placeholder:text-white/80 dark:text-white/80 text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" required="">
-                                    @error('code') <span class="text-red-500">{{ $message }}</span> @enderror
+                                    <input wire:model.defer="code" type="text" name="Client's Code" placeholder="Client's Code" class="focus:shadow-soft-primary-outline dark:bg-gray-950 text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" required="">
                                 </div>
-                                <label class="inline-block mb-2 ml-1 font-bold text-size-xs text-slate-700 dark:text-white/80" for="Client's Name">Name</label>
+                                <label class="inline-block mb-2 ml-1 font-bold text-size-xs text-slate-700" for="Client's Name">Name  @error('name') <span class="inline-block mb-2 ml-1 font-bold text-red-500 text-size-xs">({{ $message }})</span> @enderror</label>
                                 <div class="mb-4">
-                                    <input wire:model.defer="name" type="text" name="Client's Name" placeholder="Client's Name" class="focus:shadow-soft-primary-outline dark:bg-gray-950 dark:placeholder:text-white/80 dark:text-white/80 text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" required="">
-                                    @error('name') <span class="text-red-500">{{ $message }}</span> @enderror
+                                    <input wire:model.defer="name" type="text" name="Client's Name" placeholder="Client's Name" class="focus:shadow-soft-primary-outline dark:bg-gray-950 text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" required="">
                                 </div>
-                                <label class="inline-block mb-2 ml-1 font-bold text-size-xs text-slate-700 dark:text-white/80" for="Client's Address">Address</label>
+                                <label class="inline-block mb-2 ml-1 font-bold text-size-xs text-slate-700" for="Client's Address">Address  @error('address') <span class="inline-block mb-2 ml-1 font-bold text-red-500 text-size-xs">({{ $message }})</span> @enderror</label>
                                 <div class="mb-4">
-                                    <input wire:model.defer="address" type="text" name="Client's Address" placeholder="Client's Address" class="focus:shadow-soft-primary-outline dark:bg-gray-950 dark:placeholder:text-white/80 dark:text-white/80 text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" required="">
-                                    @error('address') <span class="text-red-500">{{ $message }}</span> @enderror
+                                    <input wire:model.defer="address" type="text" name="Client's Address" placeholder="Client's Address" class="focus:shadow-soft-primary-outline dark:bg-gray-950 text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" required="">
                                 </div>
-                                <label class="inline-block mb-2 ml-1 font-bold text-size-xs text-slate-700 dark:text-white/80" for="Client's Contact No">Contact No</label>
+                                <label class="inline-block mb-2 ml-1 font-bold text-size-xs text-slate-700" for="Client's Contact No">Contact No  @error('phone') <span class="inline-block mb-2 ml-1 font-bold text-red-500 text-size-xs">({{ $message }})</span> @enderror</label>
                                 <div class="mb-4">
-                                    <input wire:model.defer="phone" type="text" name="Client's Contact No" placeholder="Client's Contact No" class="focus:shadow-soft-primary-outline dark:bg-gray-950 dark:placeholder:text-white/80 dark:text-white/80 text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" required="">
-                                    @error('phone') <span class="text-red-500">{{ $message }}</span> @enderror
+                                    <input wire:model.defer="phone" type="text" name="Client's Contact No" placeholder="Client's Contact No" class="focus:shadow-soft-primary-outline dark:bg-gray-950 text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" required="">
                                 </div>
                             </div>
                         </div>
