@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\Module\Clients;
+namespace App\Http\Livewire\Module\Projects;
 
-use App\Models\Clients;
+use App\Models\Projects;
 use App\Services\ImageInterventionServices;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Str;
 
 class Add extends Component
 {
@@ -17,8 +15,7 @@ class Add extends Component
     public $logo;
     public $code;
     public $name;
-    public $address;
-    public $phone;
+    public $details;
 
     private ImageInterventionServices $imgInterventionService;
 
@@ -31,8 +28,7 @@ class Add extends Component
         'logo' => 'required|file|mimes:jpg,png', // 1MB Max
         'code' => 'string',
         'name' => 'string',
-        'address' => 'string',
-        'phone' => 'string',
+        'details' => 'string',
     ];
 
     protected $messages = [
@@ -43,23 +39,22 @@ class Add extends Component
     {
         $this->validate();
         $uuid = Str::uuid();
-        $path = $this->imgInterventionService->createThumbnail($this->logo, $uuid, 'Clients');
+        $path = $this->imgInterventionService->createThumbnail($this->logo, $uuid, 'Project');
 
-        Clients::create([
+        Projects::create([
             'uuid' => $uuid,
             'code' => $this->code,
             'name' => $this->name,
-            'address' => $this->address,
-            'phone' => $this->phone,
+            'details' => $this->details,
             'logo' => $path,
             'active' => True
         ]);
 
-        return redirect()->route('clients:index');
+        return redirect()->route('projects:index');
     }
 
     public function render()
     {
-        return view('livewire.module.clients.add');
+        return view('livewire.module.projects.add');
     }
 }

@@ -7,21 +7,7 @@ use Livewire\Component;
 
 class Index extends Component
 {
-    public $client;
     protected $listeners = ['deleteConfirmed'];
-
-    public function deleteConfirmed($id) {
-        Clients::find($id)->update(['active' => False]);
-        Clients::find($id)->delete();
-
-        $this->dispatchBrowserEvent('swal', [
-            'title' => 'Success!',
-            'text' => 'Client delete successfully.',
-            'icon'  => 'success',
-            'showConfirmButton' => false,
-            'timer' => 2500,
-        ]);
-    }
 
     public function changeStatus($uuid)
     {
@@ -45,6 +31,20 @@ class Index extends Component
             // data used to delete if confirmed
             'id' => Clients::whereUuid($uuid)->first()->id,
             'postEvent' => 'deleteConfirmed',
+        ]);
+    }
+
+    public function deleteConfirmed($id)
+    {
+        Clients::find($id)->update(['active' => False]);
+        Clients::find($id)->delete();
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'Success!',
+            'text' => 'Client delete successfully.',
+            'icon'  => 'success',
+            'showConfirmButton' => false,
+            'timer' => 2500,
         ]);
     }
 

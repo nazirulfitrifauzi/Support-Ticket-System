@@ -58,7 +58,7 @@ class Update extends Component
         ]);
 
         if ($validatedData['logo']) {
-            $path = $this->imgInterventionService->createThumbnail($this->logo, $this->client->uuid);
+            $path = $this->imgInterventionService->createThumbnail($this->logo, $this->client->uuid, 'Clients');
             Clients::whereId($this->client->id)->update([ 'logo' => $path ]);
         }
 
