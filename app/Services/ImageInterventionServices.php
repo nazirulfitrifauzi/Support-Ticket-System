@@ -13,7 +13,7 @@ class ImageInterventionServices
         $oriExt = $logo->getClientOriginalextension();
         // save original logo
         $oriImg = Image::make($logo)->stream();
-        $oriPath = 'logo/' . $folder . '/' . $uuid . '.' . $oriExt;
+        $oriPath = 'original/' . $folder . '/' . $uuid . '.' . $oriExt;
         Storage::put('public/' . $oriPath, $oriImg);
 
         return $oriExt;

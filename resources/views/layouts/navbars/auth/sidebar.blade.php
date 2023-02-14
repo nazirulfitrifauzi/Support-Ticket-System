@@ -25,9 +25,17 @@
 
             {{-- seperator --}}
             <li class="w-full mt-4">
-                <h6 class="pl-6 ml-2 font-bold leading-tight uppercase text-size-xs opacity-60"> Modules</h6>
+                <h6 class="pl-6 ml-2 font-bold leading-tight uppercase text-size-xs opacity-60"> Management</h6>
             </li>
 
+            <li class="mt-0.5 w-full">
+                <a class="py-2.7 text-size-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors {{ (Request::is('users') ? 'shadow-soft-xl rounded-lg bg-white font-semibold text-slate-700' : '') }}" href="{{ url('users') }}">
+                    <div class="{{ (Request::is('users') ? ' bg-gradient-fuchsia text-white' : '') }} shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
+                        <i class="fa fa-users"></i>
+                    </div>
+                    <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Users</span>
+                </a>
+            </li>
             <li class="mt-0.5 w-full">
                 <a class="py-2.7 text-size-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors {{ (Request::is('clients') ? 'shadow-soft-xl rounded-lg bg-white font-semibold text-slate-700' : '') }}" href="{{ url('clients') }}">
                     <div class="{{ (Request::is('clients') ? ' bg-gradient-fuchsia text-white' : '') }} shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
@@ -44,6 +52,12 @@
                     <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Projects</span>
                 </a>
             </li>
+
+            {{-- seperator --}}
+            <li class="w-full mt-4">
+                <h6 class="pl-6 ml-2 font-bold leading-tight uppercase text-size-xs opacity-60"> Modules</h6>
+            </li>
+
             <li class="mt-0.5 w-full">
                 <a class="py-2.7 text-size-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors {{ (Request::is('tickets') ? 'shadow-soft-xl rounded-lg bg-white font-semibold text-slate-700' : '') }}" href="{{ url('tickets') }}">
                     <div class="{{ (Request::is('tickets') ? ' bg-gradient-fuchsia text-white' : '') }} shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">

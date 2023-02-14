@@ -53,7 +53,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/rtl', Rtl::class)->name('rtl');
     Route::get('/virtual-reality', VirtualReality::class)->name('virtual-reality');
     Route::get('/user-profile', UserProfile::class)->name('user-profile');
-    Route::get('/user-management', UserManagement::class)->name('user-management');
 
     // DEV
     Route::prefix('clients')->as('clients:')->group(
@@ -66,5 +65,9 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('tickets')->as('tickets:')->group(
         base_path('routes/web/tickets.php'),
+    );
+
+    Route::prefix('users')->as('users:')->group(
+        base_path('routes/web/users.php'),
     );
 });

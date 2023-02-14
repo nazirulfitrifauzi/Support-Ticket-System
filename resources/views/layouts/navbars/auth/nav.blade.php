@@ -5,7 +5,7 @@
             <!-- breadcrumb -->
             <ol class="flex flex-wrap pt-1 bg-transparent rounded-lg">
                 <li class="leading-normal text-size-sm">
-                    <a class="opacity-50 text-slate-700" href="javascript:;">Modules</a>
+                    <a class="opacity-50 text-slate-700" href="javascript:;"><i class="fa fa-home"></i></a>
                 </li>
                 <li class="text-size-sm pl-2 capitalize leading-normal text-slate-700 before:float-left before:pr-2 before:text-gray-600 before:content-['/']" aria-current="page">{{ str_replace('/', ' / ', str_replace('-', ' ', Request::path()))  }}</li>
             </ol>

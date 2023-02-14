@@ -9,24 +9,17 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use OwenIt\Auditing\Contracts\Auditable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements Auditable
 {
-    use HasApiTokens, HasFactory, Notifiable;
-    use \OwenIt\Auditing\Auditable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, \OwenIt\Auditing\Auditable;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
-    // protected $fillable = [
-    //     'name',
-    //     'email',
-    //     'password',
-    // ];
-
-
     protected $guarded = [];
 
     /**
