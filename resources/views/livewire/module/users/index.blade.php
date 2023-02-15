@@ -52,7 +52,7 @@
                                     </td>
                                     <td class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                         <p class="mb-0 text-base font-semibold leading-tight">
-                                            <a href="#"><i class="fas fa-user-edit" aria-hidden="true"></i></a>
+                                            <a href="{{ route('users:update', ['uuid' => $list->uuid]) }}"><i class="fas fa-user-edit" aria-hidden="true"></i></a>
                                             <a href="#" wire:click="delete('{{ $list->uuid }}')"><i class="cursor-pointer fas fa-trash" aria-hidden="true"></i></a>
                                         </p>
                                     </td>

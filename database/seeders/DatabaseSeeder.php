@@ -3,9 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
-use App\Models\User;
-use Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,11 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->create([
-            'uuid' => Str::uuid(),
-            'name' => 'Admin',
-            'email' => 'admin@csc.net.my',
-            'password' => Hash::make('secret'),
+        $this->call([
+            UserSeeder::class,
+            LaratrustSeeder::class,
         ]);
     }
 }

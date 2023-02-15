@@ -24,6 +24,9 @@
     <!-- Main Styling -->
     <link href="{{ asset('assets') }}/css/styles.css?v=1.0.3" rel="stylesheet" />
 
+    <!-- plugin for sweetalert2  -->
+    <script src="{{ asset('assets') }}/js/plugins/sweetalert2.js" async></script>
+
     @livewireStyles
 
 </head>
@@ -45,17 +48,24 @@
             }
         });
     </script>
+    @if (session()->has('permissionRouteFailed'))
+        <script>
+            notification = @json(session()->pull("permissionRouteFailed"));
+            Swal.fire(notification)
+
+            @php
+                session()->forget('permissionRouteFailed');
+            @endphp
+        </script>
+    @endif
+
+    <!-- plugin for charts  -->
+    <script src="{{ asset('assets') }}/js/plugins/chartjs.min.js" async></script>
+    <!-- plugin for scrollbar  -->
+    <script src="{{ asset('assets') }}/js/plugins/perfect-scrollbar.min.js" async></script>
+    <!-- github button -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- main script file  -->
+    <script src="{{ asset('assets') }}/js/soft-ui-dashboard-tailwind.js?v=1.0.3" async></script>
 </body>
-
-<!-- plugin for sweetalert2  -->
-<script src="{{ asset('assets') }}/js/plugins/sweetalert2.js" async></script>
-<!-- plugin for charts  -->
-<script src="{{ asset('assets') }}/js/plugins/chartjs.min.js" async></script>
-<!-- plugin for scrollbar  -->
-<script src="{{ asset('assets') }}/js/plugins/perfect-scrollbar.min.js" async></script>
-<!-- github button -->
-<script async defer src="https://buttons.github.io/buttons.js"></script>
-<!-- main script file  -->
-<script src="{{ asset('assets') }}/js/soft-ui-dashboard-tailwind.js?v=1.0.3" async></script>
-
 </html>

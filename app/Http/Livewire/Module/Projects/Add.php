@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Module\Projects;
 
+use App\Action\CheckPermission;
 use App\Models\Projects;
 use App\Services\ImageInterventionServices;
 use Livewire\Component;
@@ -35,22 +36,28 @@ class Add extends Component
         //
     ];
 
-    public function submit()
+    public function submit(CheckPermission $checkPermission)
     {
         $this->validate();
+        $check = $checkPermission->handle('projects-create');
         $uuid = Str::uuid();
-        $path = $this->imgInterventionService->createThumbnail($this->logo, $uuid, 'Project');
 
-        Projects::create([
-            'uuid' => $uuid,
-            'code' => $this->code,
-            'name' => $this->name,
-            'details' => $this->details,
-            'logo' => $path,
-            'active' => True
-        ]);
+        if ($check['status'] == true) {
+            $path = $this->imgInterventionService->createThumbnail($this->logo, $uuid, 'Project');
 
-        return redirect()->route('projects:index');
+            Projects::create([
+                'uuid' => $uuid,
+                'code' => $this->code,
+                'name' => $this->name,
+                'details' => $this->details,
+                'logo' => $path,
+                'active' => True
+            ]);
+
+            return redirect()->route('projects:index');
+        } else {
+            $this->dispatchBrowserEvent('swal', $check['data']);
+        }
     }
 
     public function render()
