@@ -24,11 +24,10 @@
     <!-- Main Styling -->
     <link href="{{ asset('assets') }}/css/styles.css?v=1.0.3" rel="stylesheet" />
 
-    <!-- plugin for sweetalert2  -->
-    <script src="{{ asset('assets') }}/js/plugins/sweetalert2.js" async></script>
-
     @livewireStyles
 
+    <!-- plugin for sweetalert2  -->
+    <script src="{{ asset('assets') }}/js/plugins/sweetalert2.js" async></script>
 </head>
 
 <body class="m-0 font-sans antialiased font-normal text-size-base leading-default bg-gray-50 text-slate-500">
@@ -48,13 +47,17 @@
             }
         });
     </script>
-    @if (session()->has('permissionRouteFailed'))
+    @if (session()->has('failedPermission'))
         <script>
-            notification = @json(session()->pull("permissionRouteFailed"));
-            Swal.fire(notification)
+            notification = @json(session()->pull("failedPermission"));
+            console.log(notification);
+
+            setTimeout(() => {
+                Swal.fire(notification)
+            }, 1000);
 
             @php
-                session()->forget('permissionRouteFailed');
+                session()->forget('failedPermission');
             @endphp
         </script>
     @endif

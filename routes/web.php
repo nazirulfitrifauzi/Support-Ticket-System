@@ -55,11 +55,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/user-profile', UserProfile::class)->name('user-profile');
 
     // DEV
-    Route::prefix('clients')->as('clients:')->group(
+    Route::middleware('role:admin')->prefix('clients')->as('clients:')->group(
         base_path('routes/web/clients.php'),
     );
 
-    Route::prefix('projects')->as('projects:')->group(
+    Route::middleware('role:admin')->prefix('projects')->as('projects:')->group(
         base_path('routes/web/projects.php'),
     );
 
@@ -67,7 +67,7 @@ Route::middleware('auth')->group(function () {
         base_path('routes/web/tickets.php'),
     );
 
-    Route::prefix('users')->as('users:')->group(
+    Route::middleware('role:admin')->prefix('users')->as('users:')->group(
         base_path('routes/web/users.php'),
     );
 });

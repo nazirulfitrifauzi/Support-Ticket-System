@@ -17,11 +17,11 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->create([
+        $admin = User::factory()->create([
             'uuid' => Str::uuid(),
             'name' => 'Admin',
             'email' => 'admin@csc.net.my',
-            'password' => Hash::make('secret'),
+            'password' => Hash::make('Csc@123'),
         ]);
     }
 }
