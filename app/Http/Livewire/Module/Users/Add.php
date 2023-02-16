@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Module\Users;
 
+use App\Http\Traits\CheckPermission;
+use App\Http\Traits\ImageIntervention;
 use App\Models\User;
 use App\Services\ImageInterventionServices;
 use Illuminate\Support\Facades\Hash;
@@ -11,20 +13,13 @@ use Str;
 
 class Add extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, CheckPermission, ImageIntervention;
 
     public $avatar;
     public $name;
     public $email;
     public $password;
     public $passwordConfirmation;
-
-    private ImageInterventionServices $imgInterventionService;
-
-    public function boot(ImageInterventionServices $imgInterventionService)
-    {
-        $this->imgInterventionService = $imgInterventionService;
-    }
 
     protected $rules = [
         'avatar' => 'nullable|file|mimes:jpg,png', // 1MB Max
@@ -40,25 +35,30 @@ class Add extends Component
     public function submit()
     {
         $this->validate();
+        $check = $this->CheckPermission('users-create');
         $uuid = Str::uuid();
 
-        $id = User::create([
-            'uuid' => $uuid,
-            'name' => $this->name,
-            'email' => $this->email,
-            'password' => Hash::make($this->password),
-            'active' => True
-        ])->id;
+        if ($check['status']) {
+            $id = User::create([
+                'uuid' => $uuid,
+                'name' => $this->name,
+                'email' => $this->email,
+                'password' => Hash::make($this->password),
+                'active' => True
+            ])->id;
 
-        if ($this->avatar) {
-            $path = $this->imgInterventionService->createThumbnail($this->avatar, $uuid, 'Users');
+            if ($this->avatar) {
+                $path = $this->createThumbnail($this->avatar, $uuid, 'Users');
 
-            User::find($id)->update([
-                'avatar' => $path,
-            ]);
+                User::find($id)->update([
+                    'avatar' => $path,
+                ]);
+            }
+
+            return redirect()->route('users:index');
+        } else {
+            $this->dispatchBrowserEvent('swal', $check['data']);
         }
-
-        return redirect()->route('users:index');
     }
 
     public function render()

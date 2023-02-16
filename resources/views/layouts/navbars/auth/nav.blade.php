@@ -24,6 +24,7 @@
                     placeholder="Type here..." />
                 </div>
             </div>
+            {{ auth()->user()->name }}
             <ul class="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full">
                 <li class="flex items-center">
                     <a href="javascript:;" class="block px-0 py-2 font-semibold transition-all ease-nav-brand text-size-sm text-slate-500">

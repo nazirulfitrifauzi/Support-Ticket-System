@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('code');
             $table->string('name');
             $table->string('details');
-            $table->string('logo');
+            $table->string('logo')->nullable();
             $table->boolean('active');
             $table->timestamps();
             $table->softDeletes();

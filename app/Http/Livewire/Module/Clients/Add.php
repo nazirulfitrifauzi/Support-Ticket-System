@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Module\Clients;
 
+use App\Http\Traits\CheckPermission;
+use App\Http\Traits\ImageIntervention;
 use App\Models\Clients;
 use App\Services\ImageInterventionServices;
 use Illuminate\Support\Facades\Storage;
@@ -12,20 +14,13 @@ use Livewire\WithFileUploads;
 
 class Add extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, CheckPermission, ImageIntervention;
 
     public $logo;
     public $code;
     public $name;
     public $address;
     public $phone;
-
-    private ImageInterventionServices $imgInterventionService;
-
-    public function boot(ImageInterventionServices $imgInterventionService)
-    {
-        $this->imgInterventionService = $imgInterventionService;
-    }
 
     protected $rules = [
         'logo' => 'required|file|mimes:jpg,png', // 1MB Max
@@ -42,20 +37,24 @@ class Add extends Component
     public function submit()
     {
         $this->validate();
+        $check = $this->CheckPermission('clients-create');
         $uuid = Str::uuid();
-        $path = $this->imgInterventionService->createThumbnail($this->logo, $uuid, 'Clients');
 
-        Clients::create([
-            'uuid' => $uuid,
-            'code' => $this->code,
-            'name' => $this->name,
-            'address' => $this->address,
-            'phone' => $this->phone,
-            'logo' => $path,
-            'active' => True
-        ]);
+        if ($check['status']) {
+            $path = $this->createThumbnail($this->logo, $uuid, 'Clients');
 
-        return redirect()->route('clients:index');
+            Clients::create([
+                'uuid' => $uuid,
+                'code' => $this->code,
+                'name' => $this->name,
+                'address' => $this->address,
+                'phone' => $this->phone,
+                'logo' => $path,
+                'active' => True
+            ]);
+
+            return redirect()->route('clients:index');
+        }
     }
 
     public function render()

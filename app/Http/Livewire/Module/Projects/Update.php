@@ -2,14 +2,15 @@
 
 namespace App\Http\Livewire\Module\Projects;
 
+use App\Http\Traits\CheckPermission;
+use App\Http\Traits\ImageIntervention;
 use App\Models\Projects;
-use App\Services\ImageInterventionServices;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class Update extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, CheckPermission, ImageIntervention;
 
     public $logo;
     public $code;
@@ -17,12 +18,6 @@ class Update extends Component
     public $details;
     public $uuid;
     public $project;
-    private ImageInterventionServices $imgInterventionService;
-
-    public function boot(ImageInterventionServices $imgInterventionService)
-    {
-        $this->imgInterventionService = $imgInterventionService;
-    }
 
     protected $rules = [
         'logo' => 'nullable|file|mimes:jpg,png', // 1MB Max
@@ -42,6 +37,29 @@ class Update extends Component
         $this->code = $this->project->code;
         $this->name = $this->project->name;
         $this->details = $this->project->details;
+    }
+
+    public function submit()
+    {
+        $validatedData = $this->validate();
+        $check = $this->CheckPermission('projects-update');
+
+        if ($check['status']) {
+            Projects::find($this->project->id)->update([
+                'code' => $this->code,
+                'name' => $this->name,
+                'details' => $this->details,
+            ]);
+
+            if ($validatedData['logo']) {
+                $path = $this->createThumbnail($this->logo, $this->project->uuid, 'Project');
+                Projects::whereId($this->project->id)->update(['logo' => $path]);
+            }
+
+            return redirect()->route('projects:index');
+        } else {
+            $this->dispatchBrowserEvent('swal', $check['data']);
+        }
     }
 
     public function render()

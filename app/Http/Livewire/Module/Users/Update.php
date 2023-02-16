@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Module\Users;
 
+use App\Http\Traits\CheckPermission;
+use App\Http\Traits\ImageIntervention;
 use App\Models\User;
 use App\Services\ImageInterventionServices;
 use Livewire\Component;
@@ -9,7 +11,7 @@ use Livewire\WithFileUploads;
 
 class Update extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, CheckPermission, ImageIntervention;
 
     public $uuid;
     public $user;
@@ -18,13 +20,6 @@ class Update extends Component
     public $email;
     public $password;
     public $passwordConfirmation;
-
-    private ImageInterventionServices $imgInterventionService;
-
-    public function boot(ImageInterventionServices $imgInterventionService)
-    {
-        $this->imgInterventionService = $imgInterventionService;
-    }
 
     protected $rules = [
         'avatar' => 'nullable|file|mimes:jpg,png', // 1MB Max
@@ -49,19 +44,24 @@ class Update extends Component
     public function submit()
     {
         $validatedData = $this->validate();
+        $check = $this->CheckPermission('users-update');
 
-        User::find($this->user->id)->update([
-            'name' => $this->name,
-            'email' => $this->email,
-            'avatar' => $this->avatar,
-        ]);
+        if ($check['status']) {
+            User::find($this->user->id)->update([
+                'name' => $this->name,
+                'email' => $this->email,
+                'avatar' => $this->avatar,
+            ]);
 
-        if ($validatedData['avatar']) {
-            $path = $this->imgInterventionService->createThumbnail($this->avatar, $this->user->uuid, 'Users');
-            User::whereId($this->user->id)->update(['avatar' => $path]);
+            if ($validatedData['avatar']) {
+                $path = $this->createThumbnail($this->avatar, $this->user->uuid, 'Users');
+                User::whereId($this->user->id)->update(['avatar' => $path]);
+            }
+
+            return redirect()->route('users:index');
+        } else {
+            $this->dispatchBrowserEvent('swal', $check['data']);
         }
-
-        return redirect()->route('users:index');
     }
 
     public function render()

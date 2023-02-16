@@ -10,7 +10,13 @@
                         <div class="flex space-x-4">
                             <div class="relative inline-flex items-center justify-center w-3/12 text-white transition-all duration-200 w-19 text-size-base ease-soft-in-out rounded-xl">
                                 <span class="relative inline-block">
-                                    <img class="w-full h-full rounded-xl" src="/storage/{{ $project->logo }}" alt="">
+                                    @if($logo)
+                                        <img class="w-full h-full rounded-xl" src="{{ $logo->temporaryUrl() }}" alt="">
+                                    @elseif (!$project->logo)
+                                        <img class="w-full h-full rounded-xl" src="/storage/profile/avatar.jpg" alt="">
+                                    @else
+                                        <img class="w-full h-full rounded-xl" src="/storage/{{ $project->logo }}" alt="">
+                                    @endif
                                     <label for="file-input" class="inline-block w-6 h-6 p-1.2 right-0 bottom-0 absolute -mb-2 -mr-2 font-bold text-center uppercase align-middle transition-all bg-gradient-gray text-slate-800 border-0 border-transparent border-solid rounded-lg cursor-pointer leading-pro text-size-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 active:opacity-85">
                                         <i class="top-0 fa fa-pen text-size-3xs" aria-hidden="true"></i>
                                     </label>

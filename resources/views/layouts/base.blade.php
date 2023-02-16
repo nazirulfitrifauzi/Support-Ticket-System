@@ -50,8 +50,6 @@
     @if (session()->has('failedPermission'))
         <script>
             notification = @json(session()->pull("failedPermission"));
-            console.log(notification);
-
             setTimeout(() => {
                 Swal.fire(notification)
             }, 1000);

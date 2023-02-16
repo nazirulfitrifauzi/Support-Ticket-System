@@ -2,31 +2,24 @@
 
 namespace App\Http\Livewire\Module\Projects;
 
-use App\Action\CheckPermission;
+use App\Http\Traits\CheckPermission;
+use App\Http\Traits\ImageIntervention;
 use App\Models\Projects;
-use App\Services\ImageInterventionServices;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Str;
 
 class Add extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, CheckPermission, ImageIntervention;
 
     public $logo;
     public $code;
     public $name;
     public $details;
 
-    private ImageInterventionServices $imgInterventionService;
-
-    public function boot(ImageInterventionServices $imgInterventionService)
-    {
-        $this->imgInterventionService = $imgInterventionService;
-    }
-
     protected $rules = [
-        'logo' => 'required|file|mimes:jpg,png', // 1MB Max
+        'logo' => 'nullable|file|mimes:jpg,png', // 1MB Max
         'code' => 'string',
         'name' => 'string',
         'details' => 'string',
@@ -36,23 +29,28 @@ class Add extends Component
         //
     ];
 
-    public function submit(CheckPermission $checkPermission)
+    public function submit()
     {
         $this->validate();
-        $check = $checkPermission->handle('projects-create');
+        $check = $this->CheckPermission('projects-create');
         $uuid = Str::uuid();
 
-        if ($check['status'] == true) {
-            $path = $this->imgInterventionService->createThumbnail($this->logo, $uuid, 'Project');
-
-            Projects::create([
+        if ($check['status']) {
+            $id = Projects::create([
                 'uuid' => $uuid,
                 'code' => $this->code,
                 'name' => $this->name,
                 'details' => $this->details,
-                'logo' => $path,
                 'active' => True
-            ]);
+            ])->id;
+
+            if ($this->logo) {
+                $path = $this->createThumbnail($this->logo, $uuid, 'Project');
+
+                Projects::find($id)->update([
+                    'logo' => $path,
+                ]);
+            }
 
             return redirect()->route('projects:index');
         } else {

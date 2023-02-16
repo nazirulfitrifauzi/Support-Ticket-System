@@ -1,12 +1,17 @@
 <?php
 
-namespace App\Services;
+namespace App\Http\Traits;
 
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
-class ImageInterventionServices
+trait ImageIntervention
 {
+    /**
+     * @param Request $request
+     * @return $this|false|string
+     */
+
     public function saveOriginalFile($logo, $uuid, $folder)
     {
         // original extension
@@ -24,12 +29,12 @@ class ImageInterventionServices
         $ext = $this->saveOriginalFile($logo, $uuid, $folder);
         // save thumbnail
         $thumbImg = Image::make($logo);
-        $thumbImg->resize($size[0], $size[1], function($constraint) {
+        $thumbImg->resize($size[0], $size[1], function ($constraint) {
             $constraint->aspectRatio();
             $constraint->upsize();
         });
         $thumbImg->resizeCanvas($size[0], $size[1], 'center', false)->stream();
-        $thumbPath = 'thumbnail/' . $folder. '/' . $uuid . '.' . $ext;
+        $thumbPath = 'thumbnail/' . $folder . '/' . $uuid . '.' . $ext;
         Storage::put('public/' . $thumbPath, $thumbImg);
 
         return $thumbPath;
